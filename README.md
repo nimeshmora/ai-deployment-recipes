@@ -70,6 +70,7 @@ The cookbook grows by workload. Anyone can add a recipe — **including vendors 
 
 ## Docs
 
+- [Docs index](docs/README.md) — what each document is, and a reading order
 - [Recipe 01 — run, deploy, verify, troubleshoot](recipes/01-ai-app/README.md)
 - [See the safeguards yourself](docs/see-the-safeguards.md) · [OWASP mapping](docs/owasp-mapping.md)
 - [Deployment decisions](docs/deployment-decisions.md) · [Verification record](docs/verification.md)

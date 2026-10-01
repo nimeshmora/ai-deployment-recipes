@@ -1,8 +1,19 @@
-<!--
-Copy this folder to recipes/NN-your-recipe/ and fill every section.
-A recipe is accepted when it is runnable, verified, honestly scoped, and free of
-marketing. Delete these comments before submitting. See ../../GOVERNANCE.md.
--->
+# Recipe template
+
+This is a **skeleton, not a runnable recipe.** It lists the sections every recipe here
+must cover. To add a recipe: copy this whole folder to `recipes/NN-your-recipe/`, fill in
+every section below, and add the code to run it.
+
+- **Complete, filled-in example:** [recipe 01](../01-ai-app/README.md) (a real recipe is
+  usually richer than this minimum — extra sections are welcome).
+- **How recipes are reviewed:** [GOVERNANCE.md](../../GOVERNANCE.md) — runnable, honestly
+  scoped, verified, no marketing.
+
+Delete this top block and the HTML comments when you submit.
+
+---
+
+<!-- Fill in everything below. -->
 
 # NN · <Recipe title>
 

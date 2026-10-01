@@ -1,5 +1,9 @@
 # 01 · Deploy a small AI application
 
+**What you'll build, in plain words:** a small web service (a chatbot-style API with a simple page) that runs in Docker and is set up the careful way — a token to get in, limits so it can't be abused, timeouts, redacted logs, and a locked-down container. By default it runs in **mock mode**: it replies with a fixed message and calls **no AI model**, so you can run it with **no API key and no cost** and focus on the deployment itself. Switch to *live mode* to point it at a real model endpoint.
+
+This is **recipe 01, the reference example** — it covers the sections every recipe here uses (see the [recipe template](../TEMPLATE/README.md)), with extra depth. New here? Start with [§1 Run locally](#1-run-locally-with-docker-compose).
+
 **Scope:** a stateless, single-turn text assistant on one application process. No conversation history, tool execution, database, RAG, streaming, or GPU is included in this recipe.
 
 **Two modes:** `mock` returns a fixed labeled response without external calls; `live` calls an operator-configured Chat Completions endpoint. Live-mode wire behavior is tested against controlled fixtures; a real provider has not been tested in this release environment.
