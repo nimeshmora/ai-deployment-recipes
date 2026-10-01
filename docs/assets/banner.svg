@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-label="AI Deployment Recipes — a runnable cookbook; prove every safeguard with the readiness check">
+  <rect width="1280" height="420" fill="#fbf4e6"/>
+  <rect x="0" y="0" width="1280" height="420" fill="none" stroke="#e4d8c2" stroke-width="2"/>
+
+  <!-- left: title + tagline -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="64" y="96" width="340" height="18" rx="6" fill="#ffd84d" opacity="0.85"/>
+    <text x="64" y="112" font-size="52" font-weight="800" fill="#241f1d">AI Deployment Recipes</text>
+    <text x="64" y="168" font-size="27" fill="#241f1d">Deploy an AI app you can actually explain.</text>
+    <text x="64" y="206" font-size="20" fill="#6a5f57">A runnable cookbook — run a recipe, then prove every safeguard.</text>
+
+    <text x="64" y="300" font-size="18" fill="#6a5f57">no API key · no cost · apps</text>
+    <text x="64" y="328" font-size="18" fill="#6a5f57">agents and model serving — coming next</text>
+    <rect x="64" y="344" width="150" height="3" fill="#ff6a4d"/>
+  </g>
+
+  <!-- right: terminal running the readiness check -->
+  <g>
+    <rect x="690" y="58" width="526" height="304" rx="14" fill="#241f1d"/>
+    <circle cx="716" cy="84" r="6" fill="#ff5f56"/>
+    <circle cx="738" cy="84" r="6" fill="#ffbd2e"/>
+    <circle cx="760" cy="84" r="6" fill="#27c93f"/>
+    <text x="786" y="89" font-family="Menlo, Consolas, monospace" font-size="14" fill="#8c8375">readiness-check</text>
+
+    <g font-family="Menlo, Consolas, monospace" font-size="18">
+      <text x="716" y="138" fill="#e8dfce"><tspan fill="#27c93f">$</tspan> readiness-check https://my-endpoint</text>
+      <text x="716" y="184" fill="#5fd38a">PASS  auth required</text>
+      <text x="716" y="212" fill="#5fd38a">PASS  rate limited</text>
+      <text x="716" y="240" fill="#5fd38a">PASS  oversized blocked</text>
+      <text x="716" y="268" fill="#5fd38a">PASS  hardened headers</text>
+      <text x="716" y="316" fill="#ffd84d" font-weight="700">Score: 8/8 safeguards present</text>
+    </g>
+  </g>
+</svg>

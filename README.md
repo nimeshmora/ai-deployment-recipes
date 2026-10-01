@@ -1,4 +1,4 @@
-![AI Deployment Recipes — deploy an AI app you can actually explain](docs/assets/banner.jpg)
+![AI Deployment Recipes — a runnable cookbook; prove every safeguard with the readiness check](docs/assets/banner.svg)
 
 # AI Deployment Recipes
 
@@ -13,6 +13,18 @@ You don't need to be an expert, or even have an AI account. The first recipe run
 > In one line: **a vendor-neutral, runnable cookbook for deploying AI workloads** — apps, agents, and model serving — with the safeguards built in and the trade-offs made explicit.
 
 Maintained by Nimesha Jinarajadasa. Contributions — including vendor-authored recipes — are welcome; see [Contribute a recipe](#contribute-a-recipe).
+
+## What you get, and how to use it
+
+Whether you're about to put an AI service online or just want to understand what that safely takes, here's the path — about 10 minutes:
+
+1. **Run a safe AI service.** Four commands ([below](#run-recipe-01)) start recipe 01 on your machine. Free, no API key.
+2. **See it work.** One `curl` returns a reply.
+3. **Prove it's safe.** The [readiness check](tools/readiness-check/README.md) reports which safeguards are present (`8/8`) — the auth, limits, and timeouts that stop abuse and runaway cost.
+4. **Understand the choices.** [Deployment decisions](docs/deployment-decisions.md) explains each safeguard in plain words, with its limits and what you'd add before going public.
+5. **Make it yours.** Start from recipe 01's patterns for your own service, and re-run the readiness check as you adapt it, to catch anything you dropped.
+
+You walk away with a **hardened, copyable starting point** and a **tool to verify** a deployment has the safeguards most tutorials skip — the difference between "a model replied" and "a service I can safely put online."
 
 ## Recipes
 
