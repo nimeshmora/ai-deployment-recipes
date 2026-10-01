@@ -4,9 +4,13 @@
 
 ### Find your workload. Run a recipe. Understand the deployment.
 
-A **vendor-neutral, runnable cookbook for deploying AI workloads** — AI applications, agent workloads, and model serving. Each recipe is a small deployment you can actually run, with the safeguards built in and the trade-offs made explicit.
+**New here? This is for you too.** "Deploying" an AI app just means *actually running it as a real service people can use* — not only getting a model to reply once on your laptop, but putting it online so it stays up, can't be abused, and won't quietly run up a huge bill. That part is genuinely hard, and most tutorials skip it.
 
-Most AI examples stop at *calling a model*. The hard part is everything around it — authentication, limits, timeouts, hardened containers, health checks, failure behavior — the gap between "I got a model running" and "I run it in production." These recipes fill that gap honestly: every recipe states what it does, how it fails, what it does **not** cover, and the evidence that it was actually tested.
+This project is a **cookbook for exactly that.** Each *recipe* is a small, real AI service you can **run yourself in a few minutes**, already set up the careful way — a password to get in, limits so no one can abuse it, timeouts, and a locked-down container — with plain-language notes on *why* each piece is there.
+
+You don't need to be an expert, or even have an AI account. The first recipe runs with **no API key and no cost**: it replies with a fixed message so you can watch a real, safe deployment work before plugging in an actual model. If you can install Docker and copy a few commands, you're in.
+
+> In one line: **a vendor-neutral, runnable cookbook for deploying AI workloads** — apps, agents, and model serving — with the safeguards built in and the trade-offs made explicit.
 
 Maintained by Nimesha Jinarajadasa. Contributions — including vendor-authored recipes — are welcome; see [Contribute a recipe](#contribute-a-recipe).
 
