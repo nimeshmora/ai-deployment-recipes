@@ -36,11 +36,10 @@ recipe's folder.
    Mark untested integrations as untested.
 5. Open a pull request (the template lists the checklist).
 
-**No UI required.** A recipe is a runnable deployment + a filled-in README + verification.
-Many recipes (model serving, agent workloads) have no browser page at all — the interface
-is an API, a CLI, or `curl`. Recipe 01's web page is a flagship extra, not the bar every
-recipe must clear. Showing a recipe's safeguards is done consistently through its README
-and the shared readiness check, not a bespoke UI.
+**No UI.** A recipe is a runnable deployment + a filled-in README + verification. The
+interface is an API, a CLI, or `curl` — recipes here don't ship a web page (recipe 01
+included). A recipe's safeguards are shown consistently through its README and the shared
+readiness check, not a bespoke UI.
 
 Vendors are welcome to add a recipe for their own tool — held to the same standard:
 runnable, honestly scoped, verified, and free of marketing.

@@ -16,12 +16,10 @@ from urllib.parse import urlsplit
 import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from starlette.staticfiles import StaticFiles
 
 LOG = logging.getLogger("uvicorn.error")
-STATIC = Path(__file__).parent / "static"
 MAX_BODY = 16_384
 MAX_UPSTREAM = 262_144
 
@@ -290,7 +288,16 @@ def create_app(settings: Settings | None = None, transport=None):
 
     @app.get("/")
     async def index():
-        return FileResponse(STATIC / "index.html")
+        # This recipe is an API, not a web app. No UI is served.
+        return {
+            "service": "ai-deployment-recipes/01-ai-app",
+            "mode": app.state.settings.mode,
+            "endpoints": {
+                "chat": 'POST /api/chat  (header "Authorization: Bearer <token>", body {"message": "..."})',
+                "health": ["/health/live", "/health/ready"],
+            },
+            "check_safeguards": "python3 tools/readiness-check/readiness_check.py <url> --token <token>",
+        }
 
     @app.post("/api/chat", response_model=ChatOutput)
     async def chat(request: Request):
@@ -340,7 +347,6 @@ def create_app(settings: Settings | None = None, transport=None):
         finally:
             app.state.inflight -= 1
 
-    app.mount("/static", StaticFiles(directory=STATIC), name="static")
     return app
 
 

@@ -1,6 +1,6 @@
 # 01 · Deploy a small AI application
 
-**What you'll build, in plain words:** a small web service (a chatbot-style API with a simple page) that runs in Docker and is set up the careful way — a token to get in, limits so it can't be abused, timeouts, redacted logs, and a locked-down container. By default it runs in **mock mode**: it replies with a fixed message and calls **no AI model**, so you can run it with **no API key and no cost** and focus on the deployment itself. Switch to *live mode* to point it at a real model endpoint.
+**What you'll build, in plain words:** a small web **API** (a single-turn text-assistant endpoint) that runs in Docker and is set up the careful way — a token to get in, limits so it can't be abused, timeouts, redacted logs, and a locked-down container. There is **no web page**; you call it with `curl` or any client, and you check its safeguards with the [readiness tool](../../tools/readiness-check/README.md). By default it runs in **mock mode**: it replies with a fixed message and calls **no AI model**, so you can run it with **no API key and no cost** and focus on the deployment itself. Switch to *live mode* to point it at a real model endpoint.
 
 This is **recipe 01, the reference example** — it covers the sections every recipe here uses (see the [recipe template](../TEMPLATE/README.md)), with extra depth. New here? Start with [§1 Run locally](#1-run-locally-with-docker-compose).
 
@@ -19,9 +19,23 @@ docker compose up --build -d --wait
 python3 scripts/smoke.py
 ```
 
-Open http://localhost:8000 and paste the contents of `.secrets/app_token` into the application-token field. Use the application token, never a model provider key. The UI retains the token in its input field only; it does not use local/session storage, cookies, or URL parameters. Reloading clears the application-managed state; browser/password-manager behavior is outside the application.
+This recipe is an **API — there is no web page.** Call it with the token from `.secrets/app_token` (the application token, never a model provider key):
 
-The port binds to `127.0.0.1`, not every host interface. Other services or users on your machine may still access it. Authentication is required for `/api/chat`; the static interface and health endpoints are public to anyone who can reach the port.
+```bash
+TOKEN=$(cat .secrets/app_token)
+curl -s http://localhost:8000/api/chat \
+  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+  -d '{"message": "Hello"}'
+```
+
+To check every safeguard automatically, run the readiness tool **from the repository root**:
+
+```bash
+python3 tools/readiness-check/readiness_check.py http://localhost:8000 \
+  --token "$(cat recipes/01-ai-app/.secrets/app_token)"
+```
+
+The port binds to `127.0.0.1`, not every host interface. Other services or users on your machine may still access it. Authentication is required for `/api/chat`; the root info (`GET /`) and health endpoints are public to anyone who can reach the port.
 
 ```bash
 docker compose logs --tail=100 app
@@ -152,7 +166,7 @@ For dependency updates, edit the `.in` files and regenerate both locks with `uv 
 |---|---|
 | Container fails startup | Secret files exist and UID 10001 can read them; token length/config validation errors in logs |
 | Port already in use | Stop the conflicting service or change only the host port mapping; update `APP_URL` for smoke checks |
-| Browser returns 401 | Application token, not model provider key; recreate container after rotating it |
+| `401` from `/api/chat` | Application token, not model provider key; recreate container after rotating it |
 | Live mode returns 502 | Base URL/version path, exact model name, provider API contract, key and connectivity |
 | Readiness succeeds but chat fails | Readiness is local; inspect the request ID and sanitized status, then provider-side diagnostics |
 | Frequent 503 | Distinguish `Service busy` from provider unavailability; measure before raising concurrency |

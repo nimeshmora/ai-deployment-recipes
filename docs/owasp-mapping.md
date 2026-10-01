@@ -13,7 +13,7 @@ Lists referenced:
 ## The deployment-layer mapping
 
 Each row is a control you can watch fire in the [see-the-safeguards](see-the-safeguards.md)
-walkthrough or the app's "Prove it yourself" panel.
+walkthrough, or check automatically with the [readiness tool](../tools/readiness-check/README.md).
 
 | Safeguard in this recipe | OWASP LLM 2025 | OWASP API 2023 | Note |
 |---|---|---|---|

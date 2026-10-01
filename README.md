@@ -36,11 +36,25 @@ docker compose up --build -d --wait
 python3 scripts/smoke.py
 ```
 
-Open **http://localhost:8000**, paste the token from `.secrets/app_token`, and send a message. In **mock mode** (the default) it returns a fixed response and calls no model — so it runs with no API key and no cost. Stop with `docker compose down`. Live mode, Python-only development, and troubleshooting are in the [recipe README](recipes/01-ai-app/README.md).
+It's an **API, not a web page.** Call it — in **mock mode** (the default) it returns a fixed reply and calls no model, so no API key and no cost:
+
+```bash
+curl -s http://localhost:8000/api/chat \
+  -H "Authorization: Bearer $(cat .secrets/app_token)" -H 'Content-Type: application/json' \
+  -d '{"message": "Hello"}'
+```
+
+Then prove its safeguards with the shared readiness tool:
+
+```bash
+python3 ../../tools/readiness-check/readiness_check.py http://localhost:8000 --token "$(cat .secrets/app_token)"
+```
+
+Stop with `docker compose down`. Live mode, Python-only development, and troubleshooting are in the [recipe README](recipes/01-ai-app/README.md).
 
 ## What recipe 01 shows
 
-Recipe 01 is a stateless, single-turn text assistant (browser UI + API) that demonstrates the deployment safeguards every recipe here is held to:
+Recipe 01 is a stateless, single-turn text assistant (an HTTP API, no UI) that demonstrates the deployment safeguards every recipe here is held to:
 
 - shared-token authentication; request-body, message, rate, and concurrency limits
 - upstream timeouts plus an overall deadline; no hidden retries; bounded provider responses
@@ -48,7 +62,7 @@ Recipe 01 is a stateless, single-turn text assistant (browser UI + API) that dem
 - non-root, read-only container with dropped capabilities and resource limits
 - hash-pinned dependencies, automated tests, and CI with a container smoke test
 
-You can **[watch each safeguard fire yourself](docs/see-the-safeguards.md)** (or in the app's "Prove it yourself" panel), and see **[how they map to the OWASP LLM Top 10 & API Security](docs/owasp-mapping.md)**.
+You can **prove them yourself** — run the [readiness check](tools/readiness-check/README.md) against the endpoint, or trigger each one by hand in the [see-the-safeguards](docs/see-the-safeguards.md) walkthrough — and see **[how they map to the OWASP LLM Top 10 & API Security](docs/owasp-mapping.md)**.
 
 The scope is stated plainly: this targets a **single-instance learning deployment or internal prototype**, not a public multi-user service. [Deployment decisions](docs/deployment-decisions.md) pairs each choice with its boundary and next step; the [verification record](docs/verification.md) states exactly what was and wasn't tested.
 
@@ -57,7 +71,7 @@ The scope is stated plainly: this targets a **single-instance learning deploymen
 
 ```mermaid
 flowchart TD
-    B[Browser or API client] --> A[Authentication and input limits]
+    B[API client] --> A[Authentication and input limits]
     A --> G[Rate and concurrency admission]
     G --> M[Mock response]
     G --> H[Bounded HTTP model adapter]
@@ -72,7 +86,7 @@ The model endpoint belongs to the operator; users cannot choose a URL or model t
 
 The cookbook grows by workload. Anyone can add a recipe — **including vendors publishing one for their own tool** — held to the same standard: it must actually run, document its failure behavior and limitations, include verification evidence, and carry no marketing. Start from the [recipe template](recipes/TEMPLATE/README.md); [governance](GOVERNANCE.md) explains how recipes are reviewed and why neutrality is protected.
 
-**You don't need to build a UI.** A recipe is a runnable deployment + a README + verification. Most recipes (model serving, agents) are just an API or CLI — recipe 01's web page is a flagship extra, not a requirement.
+**No UI to build.** A recipe is a runnable deployment + a README + verification — an API or CLI, not a web page (recipe 01 included). Safeguards are shown via the shared [readiness check](tools/readiness-check/README.md).
 
 ## Docs
 

@@ -44,8 +44,9 @@ async def client_for(handler=None, **overrides):
 
 async def test_mock_and_health():
     async with client_for() as (client, app):
-        for path in ("/health/live", "/health/ready", "/", "/static/app.js"):
+        for path in ("/health/live", "/health/ready", "/"):
             assert (await client.get(path)).status_code == 200
+        assert (await client.get("/")).json()["service"].endswith("01-ai-app")
         result = await client.post("/api/chat", headers=AUTH, json={"message": "Hello"})
         assert result.status_code == 200
         assert result.json()["mode"] == "mock"
