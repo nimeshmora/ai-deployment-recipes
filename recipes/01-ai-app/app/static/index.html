@@ -11,147 +11,108 @@
 <main>
 
 <header class="topbar">
-  <a href="/" class="brand"><span class="bone" aria-hidden="true">🦴</span> AI&nbsp;Deployment&nbsp;Recipes</a>
-  <span class="tag">scribble #01 · applications</span>
+  <span class="brand"><img class="avatar" src="/static/mascot.png" alt=""> AI&nbsp;Deployment&nbsp;Recipes&nbsp;·&nbsp;01</span>
+  <span id="health" class="mode">checking…</span>
 </header>
 
 <section class="hero">
-  <div class="mascot-wrap">
-    <!-- Real photo of Nimesha, served same-origin from /static so it passes the
-         app's strict image CSP (img-src 'self'). Styled as a snapshot taped into
-         the sketchbook; the reaction sticker changes as you use the app. -->
-    <figure id="mascot" class="mascot" data-mood="happy">
-      <img class="photo" src="/static/mascot.png" alt="Nimesha, your deployment guide">
-    </figure>
-  </div>
+  <h1>This AI service is deployed <span class="hl">safely</span>.</h1>
+  <p class="lead">It's a small text-assistant API running in a hardened container. The reply isn't the point — <b>what protects it</b> is. Below is every safeguard; click <b>test</b> on a live one and watch it block a bad request. In <b>mock mode</b> it calls no model, so this is free and needs no AI key.</p>
 
-  <div class="hero-text">
-    <p class="eyebrow">build small · understand every layer</p>
-    <h1>Deploy an AI app you can actually&nbsp;explain.</h1>
-    <div class="bubble"><span id="bubble">Hi, I'm Nimesha. Paste your token and ask me anything — in mock mode I fake the answer <em>on purpose</em>, so you can study the plumbing, not the magic.</span></div>
-    <div class="status-strip"><span id="health">checking the kitchen…</span><span class="dim">single-turn · text only</span></div>
+  <div class="token">
+    <label for="token">Your app token <span class="hint">— from <code>.secrets/app_token</code>, needed for the live tests and to send a request</span></label>
+    <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="paste your app token">
+    <p class="guide" id="guide" data-ready="no">Paste your token above to unlock the live tests.</p>
   </div>
 </section>
 
-<div class="grid">
-  <section class="card note">
-    <h2>Give it a go</h2>
-    <p>Your token lives only in this page's memory. Use the one from the setup script — never your model-provider key.</p>
-    <form id="chat">
-      <label for="token">your app token</label>
-      <input id="token" type="password" required autocomplete="off" spellcheck="false" placeholder="paste from .secrets/app_token">
-      <label for="message">your message</label>
-      <textarea id="message" maxlength="4000" required rows="4" placeholder="What's the difference between liveness and readiness?"></textarea>
-      <button id="send" type="submit">send it <span aria-hidden="true">✎→</span></button>
-    </form>
-    <div id="output" role="status" aria-live="polite">the reply will show up here ↓</div>
-    <p id="meta" class="meta"></p>
-  </section>
+<section class="guards">
+  <h2>What protects this deployment</h2>
+  <ol class="guard-list">
 
-  <aside class="card">
-    <h2>What's really going on</h2>
-    <ol class="sketch-list">
-      <li><strong>Knock first</strong><span>A shared token has to match, or you're turned away at the door.</span></li>
-      <li><strong>Mind the limits</strong><span>Body size, request rate, concurrency, response size, a hard deadline.</span></li>
-      <li><strong>Fail on purpose</strong><span>Tidy errors — no leaking the provider's response or your secrets.</span></li>
-      <li><strong>Leave a trail</strong><span>Health checks and request IDs, with zero prompt logging.</span></li>
-    </ol>
-    <div class="scrap">
-      <strong>🦴 still just bones</strong>
-      <p>Mock mode calls no model. No memory between messages. Multi-user identity, distributed limits and TLS belong in <em>your</em> deployment — that's the next sketch.</p>
-    </div>
-  </aside>
-</div>
-
-<section class="card prove">
-  <div class="prove-head">
-    <h2>Prove it yourself 🔍</h2>
-    <p>The dull reply isn't the point — <em>surviving these checks</em> is. Each button sends one deliberately broken request and shows how the app stops it.</p>
-    <p class="guide" id="guide" data-ready="no">Paste your app token in the box above ↑ to unlock checks 3–8, then press any run.</p>
-  </div>
-  <ol class="checks">
-    <li class="check" data-check="c1">
-      <div class="check-top"><span class="cnum">1</span><strong>No token</strong><button type="button" class="run" data-check="c1">run</button></div>
-      <p class="line"><b>I send:</b> a request with <em>no</em> token.</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> a stranger can't reach your model or spend your budget.</p>
-      <details class="how"><summary>how it's done</summary><pre><code>supplied = request.headers.get("authorization", "").encode()
+    <li class="guard" data-check="c1">
+      <div class="g-head"><span class="g-name">Authentication required</span><span class="g-tag">OWASP API2</span><button type="button" class="test" data-check="c1">test</button></div>
+      <p class="g-why">A request with no token never reaches the model — anonymous traffic can't spend your budget.</p>
+      <p class="g-result" data-role="v"></p>
+      <details class="how"><summary>show the code</summary><pre><code>supplied = request.headers.get("authorization", "").encode()
 expected = f"Bearer {app_token}".encode()
 if not hmac.compare_digest(supplied, expected):
     raise HTTPException(401, "Valid bearer token required")</code></pre></details>
     </li>
-    <li class="check" data-check="c2">
-      <div class="check-top"><span class="cnum">2</span><strong>Wrong token</strong><button type="button" class="run" data-check="c2">run</button></div>
-      <p class="line"><b>I send:</b> a made-up bearer token.</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> a leaked or guessed key still gets nothing (compared in constant time).</p>
-      <details class="how"><summary>how it's done</summary><pre><code># hmac.compare_digest avoids timing leaks that
-# would let an attacker guess the token byte by byte
-if not hmac.compare_digest(supplied, expected):
-    raise HTTPException(401, "Valid bearer token required")</code></pre></details>
-    </li>
-    <li class="check" data-check="c3">
-      <div class="check-top"><span class="cnum">3</span><strong>Wrong content-type</strong><button type="button" class="run" data-check="c3">run</button></div>
-      <p class="line"><b>I send:</b> valid token, but <code>Content-Type: text/plain</code>.</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> the app processes only what it declared it accepts (JSON).</p>
-      <details class="how"><summary>how it's done</summary><pre><code>ct = request.headers.get("content-type", "").split(";", 1)[0]
-if ct.strip().lower() != "application/json":
-    raise HTTPException(415, "Use application/json")</code></pre></details>
-    </li>
-    <li class="check" data-check="c4">
-      <div class="check-top"><span class="cnum">4</span><strong>Over-long message</strong><button type="button" class="run" data-check="c4">run</button></div>
-      <p class="line"><b>I send:</b> a 5,000-character message (limit is 4,000).</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> refused before any model call, so a giant prompt can't run up cost.</p>
-      <details class="how"><summary>how it's done</summary><pre><code>class ChatInput(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    message: StrictStr = Field(min_length=1, max_length=4000)</code></pre></details>
-    </li>
-    <li class="check" data-check="c5">
-      <div class="check-top"><span class="cnum">5</span><strong>Oversized body</strong><button type="button" class="run" data-check="c5">run</button></div>
-      <p class="line"><b>I send:</b> a ~20 KB raw body (limit is 16 KB).</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> dropped before JSON is even parsed — protects memory.</p>
-      <details class="how"><summary>how it's done</summary><pre><code>size += len(chunk)              # MAX_BODY = 16_384
-if size > MAX_BODY:
-    return await reject(413, "Request body too large")</code></pre></details>
-    </li>
-    <li class="check" data-check="c6">
-      <div class="check-top"><span class="cnum">6</span><strong>Smuggled field</strong><button type="button" class="run" data-check="c6">run</button></div>
-      <p class="line"><b>I send:</b> an unexpected <code>"admin": true</code> field.</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> a strict schema rejects extra fields instead of trusting them.</p>
-      <details class="how"><summary>how it's done</summary><pre><code># extra="forbid" rejects any field that isn't "message"
-class ChatInput(BaseModel):
-    model_config = ConfigDict(extra="forbid")</code></pre></details>
-    </li>
-    <li class="check" data-check="c7">
-      <div class="check-top"><span class="cnum">7</span><strong>Flood it</strong><button type="button" class="run" data-check="c7">run</button></div>
-      <p class="line"><b>I send:</b> 35 requests fast (budget is 30/min). <span class="warnx">spends the shared minute — chat may answer 429 for ~60s.</span></p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> one caller can't swamp the service.</p>
-      <details class="how"><summary>how it's done</summary><pre><code>if app.state.requests >= requests_per_minute:   # 30
+
+    <li class="guard" data-check="c7">
+      <div class="g-head"><span class="g-name">Rate limited</span><span class="g-tag">OWASP LLM10</span><button type="button" class="test" data-check="c7">test</button></div>
+      <p class="g-why">One caller can't flood the service. Over the budget (30/min), extra requests get <code>429</code>. <span class="warnx">This test spends the shared minute — the chat may answer 429 for ~60s.</span></p>
+      <p class="g-result" data-role="v"></p>
+      <details class="how"><summary>show the code</summary><pre><code>if app.state.requests >= requests_per_minute:   # 30
     raise HTTPException(429, "Local request limit reached",
                         headers={"Retry-After": retry})</code></pre></details>
     </li>
-    <li class="check" data-check="c8">
-      <div class="check-top"><span class="cnum">8</span><strong>Response headers</strong><button type="button" class="run" data-check="c8">run</button></div>
-      <p class="line"><b>I send:</b> a normal request — then inspect what came back.</p>
-      <p class="verdict" data-role="v">— press run —</p>
-      <p class="line"><b>Lesson:</b> hardened headers (CSP, nosniff, no-referrer) + a request ID to trace the call.</p>
-      <details class="how"><summary>how it's done</summary><pre><code>message["headers"] += [
+
+    <li class="guard" data-check="c5">
+      <div class="g-head"><span class="g-name">Oversized requests blocked</span><span class="g-tag">OWASP LLM10</span><button type="button" class="test" data-check="c5">test</button></div>
+      <p class="g-why">A huge payload is dropped before it's even parsed, protecting memory (limit 16&nbsp;KB).</p>
+      <p class="g-result" data-role="v"></p>
+      <details class="how"><summary>show the code</summary><pre><code>size += len(chunk)              # MAX_BODY = 16_384
+if size > MAX_BODY:
+    return await reject(413, "Request body too large")</code></pre></details>
+    </li>
+
+    <li class="guard" data-check="c8">
+      <div class="g-head"><span class="g-name">Hardened response headers</span><span class="g-tag">OWASP API8</span><button type="button" class="test" data-check="c8">test</button></div>
+      <p class="g-why">Every response carries CSP, nosniff, no-referrer, no-store, and a request ID you can trace in logs.</p>
+      <p class="g-result" data-role="v"></p>
+      <details class="how"><summary>show the code</summary><pre><code>message["headers"] += [
     (b"x-request-id", request_id.encode()),
     (b"content-security-policy", b"default-src 'self'; ..."),
     (b"x-content-type-options", b"nosniff"), ...]</code></pre></details>
     </li>
+
+    <li class="guard attested">
+      <div class="g-head"><span class="g-name">Timeout + no hidden retries</span><span class="g-tag">OWASP LLM10</span><span class="g-badge">built in</span></div>
+      <p class="g-why">Every model call has a hard deadline, so a slow provider never hangs the service — and nothing is silently retried behind your back.</p>
+      <details class="how"><summary>show the code</summary><pre><code># one overall deadline; no automatic retries anywhere
+async with asyncio.timeout(settings.deadline_seconds):
+    ... call the model once ...</code></pre></details>
+    </li>
+
+    <li class="guard attested">
+      <div class="g-head"><span class="g-name">Logs never record your data</span><span class="g-tag">OWASP LLM02</span><span class="g-badge">built in</span></div>
+      <p class="g-why">Prompts, answers, and tokens are never written to logs — only a status, a duration, and a request ID. Verify with <code>docker compose logs app</code>.</p>
+      <details class="how"><summary>show the code</summary><pre><code># intentionally excludes prompts, answers, credentials, URLs
+LOG.info(json.dumps({"event": "http_request",
+    "request_id": request_id, "status": status,
+    "duration_ms": duration}))</code></pre></details>
+    </li>
+
+    <li class="guard attested">
+      <div class="g-head"><span class="g-name">Locked-down container</span><span class="g-tag">OWASP API8</span><span class="g-badge">built in</span></div>
+      <p class="g-why">Runs as a non-root user on a read-only filesystem, with Linux capabilities dropped and memory/CPU limits — so a compromise has little room to move.</p>
+      <details class="how"><summary>show the code</summary><pre><code># compose.yaml
+read_only: true
+cap_drop: [ALL]
+security_opt: ["no-new-privileges:true"]
+mem_limit: 256m
+# Dockerfile runs as UID 10001, not root</code></pre></details>
+    </li>
+
   </ol>
-  <p class="logs-note"><span class="cnum static">9</span> <strong>Redacted logs</strong> — the browser can't read server logs, so run <code>docker compose logs app</code>: every line is just status + duration + request ID. Your prompt, answer and token never appear.</p>
+  <p class="more">More ways to check, and how each maps to OWASP, are in <a href="https://github.com/nimeshmora/ai-deployment-recipes/blob/main/docs/see-the-safeguards.md">the docs</a>.</p>
+</section>
+
+<section class="tryit">
+  <h2>Try a real request</h2>
+  <p class="lead">Send a message through that same protected path. In mock mode you'll get a fixed reply that confirms your request survived every checkpoint.</p>
+  <label for="message">Your message</label>
+  <textarea id="message" maxlength="4000" rows="3" placeholder="What's the difference between liveness and readiness?"></textarea>
+  <button id="send" type="button">Send request</button>
+  <div id="output" role="status" aria-live="polite">the reply will appear here ↓</div>
+  <p id="meta" class="meta"></p>
 </section>
 
 <footer class="footbar">
-  <span>v0.1.0 · apps first</span>
-  <span>agents &amp; GPU serving — coming to the sketchbook</span>
+  <span>mock mode makes no model calls · single-turn · text only</span>
+  <span><a href="https://github.com/nimeshmora/ai-deployment-recipes">the cookbook →</a></span>
 </footer>
 
 </main>
