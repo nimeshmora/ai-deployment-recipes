@@ -29,22 +29,24 @@ export APP_URL=http://localhost:8000
 export TOKEN=$(cat .secrets/app_token)
 ```
 
-## Option A — run the script
+## Option A — run the readiness check (one command)
 
 ```bash
-python3 scripts/show_safeguards.py
+python3 ../../tools/readiness-check/readiness_check.py "$APP_URL" --token "$TOKEN"
 ```
 
-It prints `PASS`/`FAIL` for checks 1–8 with a one-line reason for each, then prints
-the two commands for check 9 (log redaction). Expected ending:
+It prints `PASS`/`FAIL` for each remotely observable safeguard, each tagged with its
+OWASP item, and exits non-zero if any are missing — so the same command works as a CI
+gate. Expected ending:
 
 ```
-Summary: 8/8 HTTP-observable safeguards behaved as expected ...
+Score: 8/8 safeguards present
 ```
 
-Note: check 7 (rate limiting) spends the per-minute budget. Run the script on a
-fresh window — right after `docker compose up` — or wait 60 seconds between runs,
-or you will see fewer than 30 accepted requests.
+Note: the rate-limit check spends the per-minute budget. Run it on a fresh window (right
+after `docker compose up`), wait ~60 seconds between runs, or pass `--no-rate` to skip it.
+Log redaction isn't checkable remotely — verify it by hand with the commands in step 9
+below. See the [readiness check](../tools/readiness-check/README.md) for all options.
 
 ## Option B — see each one by hand
 

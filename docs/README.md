@@ -17,6 +17,9 @@ when you want the *why* and the proof.
 `runtime-dependency-audit.json` is raw scan output, linked as evidence from the
 verification record.
 
+To check a running recipe's safeguards automatically, use the
+[readiness check](../tools/readiness-check/README.md) tool.
+
 ## Suggested reading order (newcomer)
 
 1. [Main README](../README.md) — what this project is

@@ -76,7 +76,7 @@ Docker's `localhost` is the container itself. An endpoint on the host needs plat
 
 The body-size bound includes the entire encoded JSON body. A 4,000-character message can still exceed 16 KiB when JSON-escaped. Character limits are not token counts. Choose limits using your model's tokenizer and complete context budget when adapting this example.
 
-To watch each of these controls act, run `python3 scripts/show_safeguards.py` or follow the [see the safeguards](../../docs/see-the-safeguards.md) walkthrough.
+To check these controls automatically, run the [readiness check](../../tools/readiness-check/README.md) against this app, or follow the [see the safeguards](../../docs/see-the-safeguards.md) walkthrough to trigger each one by hand.
 
 ## 4. Configuration
 
