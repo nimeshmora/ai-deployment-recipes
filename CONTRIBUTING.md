@@ -37,8 +37,14 @@ recipe's folder.
 5. Open a pull request (the template lists the checklist).
 
 A recipe is a runnable deployment + a filled-in README + verification. The interface is an
-API, a CLI, or `curl`. A recipe's safeguards are shown consistently through its README and
-the shared readiness check.
+API, a CLI, or `curl`.
+
+**How a recipe is validated:** every recipe ships its **own tests and a smoke check** —
+this is the primary validation, written for the recipe's own shape (see recipe 01's
+`tests/` and `scripts/smoke.py`). You do not rely on a shared tool to validate a new
+recipe. For HTTP request/response recipes (apps, model serving), the shared
+[readiness check](tools/readiness-check/README.md) additionally reports the safeguards;
+other workload types (e.g. agent workers) verify through their own tests.
 
 Vendors are welcome to add a recipe for their own tool — held to the same standard:
 runnable, honestly scoped, verified, and free of marketing.

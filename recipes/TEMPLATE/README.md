@@ -5,8 +5,9 @@ must cover. To add a recipe: copy this whole folder to `recipes/NN-your-recipe/`
 every section below, and add the code to run it.
 
 - **A recipe is a runnable deployment + this README + verification.** The interface is an
-  API, a CLI, or `curl`. Prove its safeguards with the shared
-  [readiness check](../../tools/readiness-check/README.md).
+  API, a CLI, or `curl`. Your recipe ships **its own tests and smoke check** (the primary
+  validation, written for your shape). HTTP request/response recipes can also use the
+  shared [readiness check](../../tools/readiness-check/README.md).
 - **Complete, filled-in example:** [recipe 01](../01-ai-app/README.md) (a real recipe is
   usually richer than this minimum — extra sections are welcome).
 - **How recipes are reviewed:** [GOVERNANCE.md](../../GOVERNANCE.md) — runnable, honestly
@@ -69,8 +70,9 @@ relevant items to [the OWASP mapping](../../docs/owasp-mapping.md) where applica
 
 ## Verification evidence
 
-What was actually run and the result (tests, smoke checks, container build, any live
-provider/hardware runs). **Mark untested integrations explicitly.** State the environment.
+What was actually run and the result. Your recipe's **own tests and smoke check** are what
+validate it — include how to run them (container build, any live provider/hardware runs
+too). **Mark untested integrations explicitly.** State the environment.
 
 ## Cost and performance notes
 

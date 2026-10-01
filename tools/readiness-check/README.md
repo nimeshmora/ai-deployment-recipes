@@ -1,8 +1,11 @@
 # Readiness check
 
 A small, dependency-free tool that probes a running AI service and reports which
-deployment safeguards are present. Point it at **any** recipe's endpoint — it's how every
-recipe shows its safeguards.
+deployment safeguards are present. It is the shared safeguard check for **HTTP
+request/response** recipes (applications and model serving). Every recipe also ships its
+own tests — that is the primary validation; this tool is an additional, portable check
+for the HTTP shapes. It assumes recipe 01's request shape today; per-recipe profiles for
+other shapes are planned.
 
 ## Use it
 

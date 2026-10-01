@@ -98,7 +98,7 @@ The model endpoint belongs to the operator; users cannot choose a URL or model t
 
 The cookbook grows by workload. Anyone can add a recipe — **including vendors publishing one for their own tool** — held to the same standard: it must actually run, document its failure behavior and limitations, include verification evidence, and carry no marketing. Start from the [recipe template](recipes/TEMPLATE/README.md); [governance](GOVERNANCE.md) explains how recipes are reviewed and why neutrality is protected.
 
-A recipe is a runnable deployment (an API or a CLI) + a README + verification. Its safeguards are shown through the shared [readiness check](tools/readiness-check/README.md).
+A recipe is a runnable deployment (an API or a CLI) + a README + verification. It ships **its own tests and smoke check** — that's the primary validation; for HTTP request/response recipes, the shared [readiness check](tools/readiness-check/README.md) also reports its safeguards.
 
 ## Docs
 
