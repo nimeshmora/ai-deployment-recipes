@@ -13,6 +13,8 @@ GOVERNANCE.md          Principles, roles, how recipes are reviewed
 recipes/
   TEMPLATE/            Copy this to start a new recipe
   01-ai-app/           Recipe 01 — containerized text assistant (reference example)
+tools/
+  readiness-check/     Probe any recipe's endpoint for safeguards (CI-friendly)
 docs/
   deployment-decisions.md   Decisions and public-service requirements
   see-the-safeguards.md     Run each safeguard yourself

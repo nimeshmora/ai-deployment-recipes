@@ -10,9 +10,11 @@ actually runs and is verified.
   checks pass in CI.
 - **Community foundations** — governance, recipe template, contribution and issue
   templates, code of conduct. *(In place.)*
-- **Next: a readiness check** — a small tool that inspects a deployment and reports which
-  safeguards and production-readiness items are present, reusing recipe 01's checks. This
-  is the runnable hook that makes the cookbook more than documentation.
+- **Readiness check — available.** A small, dependency-free
+  [tool](tools/readiness-check/README.md) that probes any recipe's endpoint and reports
+  which safeguards are present, and works as a CI gate. It's the portable version of
+  recipe 01's "what protects this deployment" panel — the runnable hook that makes the
+  cookbook more than documentation. Next: per-recipe profiles for non-chat shapes.
 
 ## Next — recipes by workload
 
