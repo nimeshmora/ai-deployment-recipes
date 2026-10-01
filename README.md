@@ -1,6 +1,6 @@
-# AI Deployment Recipes
+![AI Deployment Recipes — deploy an AI app you can actually explain](docs/assets/banner.jpg)
 
-![AI Deployment Recipes](docs/assets/banner.svg)
+# AI Deployment Recipes
 
 ### Find your workload. Run a recipe. Understand the deployment.
 
