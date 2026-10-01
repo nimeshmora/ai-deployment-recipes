@@ -1,0 +1,41 @@
+services:
+  app:
+    build: .
+    image: ai-deployment-recipes-app:0.1.0
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      APP_TOKEN_FILE: /run/secrets/app_token
+      MODEL_API_KEY_FILE: /run/secrets/model_api_key
+      MODEL_MODE: ${MODEL_MODE:-mock}
+      MODEL_BASE_URL: ${MODEL_BASE_URL:-}
+      MODEL_NAME: ${MODEL_NAME:-}
+      ALLOW_HTTP_UPSTREAM: ${ALLOW_HTTP_UPSTREAM:-false}
+      MAX_INFLIGHT: ${MAX_INFLIGHT:-4}
+      REQUESTS_PER_MINUTE: ${REQUESTS_PER_MINUTE:-30}
+      UPSTREAM_DEADLINE_SECONDS: ${UPSTREAM_DEADLINE_SECONDS:-30}
+      MAX_OUTPUT_TOKENS: ${MAX_OUTPUT_TOKENS:-256}
+    secrets:
+      - app_token
+      - model_api_key
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 100
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 40s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+secrets:
+  app_token:
+    file: ./.secrets/app_token
+  model_api_key:
+    file: ./.secrets/model_api_key
