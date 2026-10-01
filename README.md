@@ -90,8 +90,14 @@ The configured model endpoint belongs to the operator. Users cannot supply a URL
 - [Deployment decisions and public-service requirements](docs/deployment-decisions.md)
 - [Verification record](docs/verification.md)
 - [Roadmap](ROADMAP.md)
-- [Contributing](CONTRIBUTING.md)
+- [Contributing](CONTRIBUTING.md) · [Recipe template](recipes/TEMPLATE/README.md) · [Governance](GOVERNANCE.md) · [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security](SECURITY.md)
 - [License: MIT](LICENSE)
+
+## Contribute a recipe
+
+This is meant to grow into a **vendor-neutral, runnable cookbook** for deploying AI workloads — the gap between "I can deploy a model" and "I run it in production" (industry reports put the latter at a small fraction of the former).
+
+Anyone can add a recipe, **including vendors publishing one for their own tool** — every recipe is held to the same standard: it must actually run, document its failure behavior and limitations honestly, include verification evidence, and carry no marketing. Start from the [recipe template](recipes/TEMPLATE/README.md); the [governance](GOVERNANCE.md) explains how recipes are reviewed and why neutrality is protected.
 
 The goal is straightforward: small examples that make the deployment decisions visible, with enough evidence for other engineers to inspect and improve them.
