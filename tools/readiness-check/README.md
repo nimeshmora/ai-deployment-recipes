@@ -2,7 +2,7 @@
 
 A small, dependency-free tool that probes a running AI service and reports which
 deployment safeguards are present. Point it at **any** recipe's endpoint — it's how every
-recipe shows its safeguards, no UI required.
+recipe shows its safeguards.
 
 ## Use it
 

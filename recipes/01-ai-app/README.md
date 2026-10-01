@@ -1,6 +1,6 @@
 # 01 · Deploy a small AI application
 
-**What you'll build, in plain words:** a small web **API** (a single-turn text-assistant endpoint) that runs in Docker and is set up the careful way — a token to get in, limits so it can't be abused, timeouts, redacted logs, and a locked-down container. There is **no web page**; you call it with `curl` or any client, and you check its safeguards with the [readiness tool](../../tools/readiness-check/README.md). By default it runs in **mock mode**: it replies with a fixed message and calls **no AI model**, so you can run it with **no API key and no cost** and focus on the deployment itself. Switch to *live mode* to point it at a real model endpoint.
+**What you'll build, in plain words:** a small HTTP **API** (a single-turn text-assistant endpoint) that runs in Docker and is set up the careful way — a token to get in, limits so it can't be abused, timeouts, redacted logs, and a locked-down container. You call it with `curl` or any client, and check its safeguards with the [readiness tool](../../tools/readiness-check/README.md). By default it runs in **mock mode**: it replies with a fixed message and calls **no AI model**, so you can run it with **no API key and no cost** and focus on the deployment itself. Switch to *live mode* to point it at a real model endpoint.
 
 This is **recipe 01, the reference example** — it covers the sections every recipe here uses (see the [recipe template](../TEMPLATE/README.md)), with extra depth. New here? Start with [§1 Run locally](#1-run-locally-with-docker-compose).
 
@@ -19,7 +19,7 @@ docker compose up --build -d --wait
 python3 scripts/smoke.py
 ```
 
-This recipe is an **API — there is no web page.** Call it with the token from `.secrets/app_token` (the application token, never a model provider key):
+Call it with the token from `.secrets/app_token` (the application token, never a model provider key):
 
 ```bash
 TOKEN=$(cat .secrets/app_token)

@@ -24,7 +24,7 @@ walkthrough, or check automatically with the [readiness tool](../tools/readiness
 | Model output returned as plain text | **LLM05 Improper Output Handling** | — | Returned verbatim as a JSON string; the app never renders or executes it. |
 | Logs omit prompts, answers, tokens, URLs | **LLM02 Sensitive Information Disclosure** | API8 Security Misconfiguration (logging) | Only request ID, status, duration are logged. |
 | Operator-fixed model endpoint; client cannot choose URL or model | LLM03 Supply Chain (trusted upstream) | API7 Server-Side Request Forgery | Prevents redirecting prompts/keys to an attacker endpoint. |
-| Hardened response headers (CSP, nosniff, no-referrer, no-store) + request IDs | — | API8 Security Misconfiguration | Browser hardening and traceability. |
+| Hardened response headers (CSP, nosniff, no-referrer, no-store) + request IDs | — | API8 Security Misconfiguration | Response-header hardening and traceability. |
 | Non-root, read-only container, dropped capabilities, resource limits, hash-pinned dependencies | LLM03 Supply Chain | API8 Security Misconfiguration | Secure build and runtime surface. |
 
 See [LLM10:2025 Unbounded Consumption](https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/),

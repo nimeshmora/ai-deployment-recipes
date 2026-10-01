@@ -13,8 +13,8 @@ actually runs and is verified.
 - **Readiness check — available.** A small, dependency-free
   [tool](tools/readiness-check/README.md) that probes any recipe's endpoint and reports
   which safeguards are present, and works as a CI gate — the runnable hook that makes the
-  cookbook more than documentation, and how every recipe shows its safeguards without a
-  UI. Next: per-recipe profiles for non-chat shapes.
+  cookbook more than documentation, and how every recipe shows its safeguards. Next:
+  per-recipe profiles for non-chat shapes.
 
 ## Next — recipes by workload
 

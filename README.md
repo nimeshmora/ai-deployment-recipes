@@ -48,7 +48,7 @@ docker compose up --build -d --wait
 python3 scripts/smoke.py
 ```
 
-It's an **API, not a web page.** Call it — in **mock mode** (the default) it returns a fixed reply and calls no model, so no API key and no cost:
+Call it over HTTP — in **mock mode** (the default) it returns a fixed reply and calls no model, so no API key and no cost:
 
 ```bash
 curl -s http://localhost:8000/api/chat \
@@ -66,7 +66,7 @@ Stop with `docker compose down`. Live mode, Python-only development, and trouble
 
 ## What recipe 01 shows
 
-Recipe 01 is a stateless, single-turn text assistant (an HTTP API, no UI) that demonstrates the deployment safeguards every recipe here is held to:
+Recipe 01 is a stateless, single-turn text assistant (an HTTP API) that demonstrates the deployment safeguards every recipe here is held to:
 
 - shared-token authentication; request-body, message, rate, and concurrency limits
 - upstream timeouts plus an overall deadline; no hidden retries; bounded provider responses
@@ -98,7 +98,7 @@ The model endpoint belongs to the operator; users cannot choose a URL or model t
 
 The cookbook grows by workload. Anyone can add a recipe — **including vendors publishing one for their own tool** — held to the same standard: it must actually run, document its failure behavior and limitations, include verification evidence, and carry no marketing. Start from the [recipe template](recipes/TEMPLATE/README.md); [governance](GOVERNANCE.md) explains how recipes are reviewed and why neutrality is protected.
 
-**No UI to build.** A recipe is a runnable deployment + a README + verification — an API or CLI, not a web page (recipe 01 included). Safeguards are shown via the shared [readiness check](tools/readiness-check/README.md).
+A recipe is a runnable deployment (an API or a CLI) + a README + verification. Its safeguards are shown through the shared [readiness check](tools/readiness-check/README.md).
 
 ## Docs
 

@@ -4,9 +4,9 @@ This is a **skeleton, not a runnable recipe.** It lists the sections every recip
 must cover. To add a recipe: copy this whole folder to `recipes/NN-your-recipe/`, fill in
 every section below, and add the code to run it.
 
-- **No UI.** A recipe is a runnable deployment + this README + verification. The interface
-  is an API, a CLI, or `curl` — recipes here do not ship a web page. Prove a recipe's
-  safeguards with the shared [readiness check](../../tools/readiness-check/README.md).
+- **A recipe is a runnable deployment + this README + verification.** The interface is an
+  API, a CLI, or `curl`. Prove its safeguards with the shared
+  [readiness check](../../tools/readiness-check/README.md).
 - **Complete, filled-in example:** [recipe 01](../01-ai-app/README.md) (a real recipe is
   usually richer than this minimum — extra sections are welcome).
 - **How recipes are reviewed:** [GOVERNANCE.md](../../GOVERNANCE.md) — runnable, honestly

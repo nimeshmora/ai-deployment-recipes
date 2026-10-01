@@ -15,7 +15,6 @@ Prepared 2026-10-02. Results apply to the supplied source snapshot, not all depl
 | Container build/runtime | PASS in CI | GitHub Actions builds the image, starts it with `--wait`, runs the smoke check, and verifies non-root and read-only filesystem on each push to `main`. Not a load, performance, or multi-architecture test. |
 | GitHub Actions execution | PASS | Workflow runs on each push to the published repository; `main` is green. |
 | External live provider/model | NOT RUN | No provider credentials or real model endpoint supplied |
-| Browser visual/interaction check | NOT APPLICABLE | This recipe is an HTTP API; no UI is served. |
 | Load/cost/answer-quality evaluation | NOT RUN | No performance, spending, or quality claims are made |
 | GPU behavior | NOT APPLICABLE | GPU-serving recipe is planned, not included |
 

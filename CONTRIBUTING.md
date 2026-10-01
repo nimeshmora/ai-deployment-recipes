@@ -36,10 +36,9 @@ recipe's folder.
    Mark untested integrations as untested.
 5. Open a pull request (the template lists the checklist).
 
-**No UI.** A recipe is a runnable deployment + a filled-in README + verification. The
-interface is an API, a CLI, or `curl` — recipes here don't ship a web page (recipe 01
-included). A recipe's safeguards are shown consistently through its README and the shared
-readiness check, not a bespoke UI.
+A recipe is a runnable deployment + a filled-in README + verification. The interface is an
+API, a CLI, or `curl`. A recipe's safeguards are shown consistently through its README and
+the shared readiness check.
 
 Vendors are welcome to add a recipe for their own tool — held to the same standard:
 runnable, honestly scoped, verified, and free of marketing.
