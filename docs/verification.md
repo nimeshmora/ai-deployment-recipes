@@ -13,8 +13,8 @@ Prepared 2026-10-01. Results apply to the supplied source snapshot, not all depl
 | Runtime dependency audit | PASS — no known vulnerabilities reported | `pip-audit 2.10.1`, locked runtime requirements; not a guarantee of absence of vulnerabilities. Raw output: [runtime-dependency-audit.json](runtime-dependency-audit.json) |
 | Dependency artifact hashes | Included | Runtime and development locks contain hashes; installation tested with hash enforcement |
 | GitHub Action references | Checked | Checkout v4.2.2 and setup-python v5.6.0 SHA values checked against upstream tags |
-| Container build/runtime | NOT RUN | Docker is not installed in the authoring environment; CI includes build, smoke, non-root and read-only checks |
-| GitHub Actions execution | NOT RUN | Repository has not been published |
+| Container build/runtime | PASS in CI | GitHub Actions builds the image, starts it with `--wait`, runs the smoke check, and verifies non-root and read-only filesystem on each push to `main`. Not a load, performance, or multi-architecture test. |
+| GitHub Actions execution | PASS | Workflow runs on each push to the published repository; `main` is green. |
 | External live provider/model | NOT RUN | No provider credentials or real model endpoint supplied |
 | Browser visual/interaction check | NOT RUN | Browser binary unavailable; attempted installation failed. HTML/CSS and JavaScript inspected, HTTP assets checked by tests. |
 | Load/cost/answer-quality evaluation | NOT RUN | No performance, spending, or quality claims are made |

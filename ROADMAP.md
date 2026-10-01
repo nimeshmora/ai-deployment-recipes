@@ -1,21 +1,41 @@
 # Roadmap
 
-We are starting simple: one application, one process, and deployment decisions that can be inspected. The project will grow through tested examples. Planned work below is not included in v0.1.0, and no delivery dates are promised.
+This project grows into a **vendor-neutral, runnable cookbook for deploying AI workloads**.
+The items below are direction, not promises or delivery dates. A recipe ships only when it
+actually runs and is verified.
 
-## First: strengthen the baseline
+## Now — a credible, runnable hub
 
-- Complete the container and live-provider validation matrix and publish results.
-- Add a separately reviewed TLS ingress deployment example.
-- Add a reproducible load-test recipe with recorded workload parameters.
+- **Recipe 01 (AI application)** — available; container build, smoke, and non-root/read-only
+  checks pass in CI.
+- **Community foundations** — governance, recipe template, contribution and issue
+  templates, code of conduct. *(In place.)*
+- **Next: a readiness check** — a small tool that inspects a deployment and reports which
+  safeguards and production-readiness items are present, reusing recipe 01's checks. This
+  is the runnable hook that makes the cookbook more than documentation.
 
-## Next: agent workloads
+## Next — recipes by workload
 
-A queue-backed worker with persisted task state, bounded retries, recovery exercises, and idempotent mock side effects. Document at-least-once delivery and the action/checkpoint boundary; avoid unsupported “exactly once” claims.
+- **AI applications:** a TLS-terminated ingress example; a reproducible load-test recipe
+  with recorded workload parameters.
+- **Agent workloads:** a queue-backed worker with persisted task state, bounded retries,
+  recovery exercises, and idempotent mock side effects. Document at-least-once delivery and
+  the action/checkpoint boundary honestly; no unsupported "exactly once" claims.
+- **Model serving:** a GPU model-server recipe with explicit model/license/hardware
+  requirements. Measure latency and memory under representative context lengths and
+  concurrency, and publish the hardware, versions, and test conditions with every number.
 
-## Then: model serving
+## Then — community and contributions
 
-A GPU model-server recipe with explicit model/license/hardware requirements. Measure memory and latency under representative context lengths and concurrency. Publish hardware, software versions, prompts and test conditions with every result.
+- Lower the bar to contribute: good-first-issue recipe requests and worked examples.
+- Welcome **vendor-authored recipes** under the same standard — runnable, verified,
+  honestly scoped, no marketing. The [recipe template](recipes/TEMPLATE/README.md) is the
+  contribution slot.
+- A `works-with` / `verified` label that reflects a maintainer-run check, never a
+  commercial relationship.
 
-## Contributions
+## How to help
 
-Start with a focused issue describing the workload and a reproducible need. Keep each recipe independently runnable. Broad vendor support or a large infrastructure stack is not a prerequisite for a useful contribution.
+Start with a focused issue describing a workload and a reproducible need, or propose a
+recipe from the template. Keep each recipe independently runnable. Broad vendor support or
+a large infrastructure stack is not a prerequisite for a useful contribution.
