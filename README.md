@@ -4,11 +4,11 @@
 
 ### Find your workload. Run a recipe. Understand the deployment.
 
-**New here? This is for you too.** "Deploying" an AI app just means *actually running it as a real service people can use* — not only getting a model to reply once on your laptop, but putting it online so it stays up, can't be abused, and won't quietly run up a huge bill. That part is genuinely hard, and most tutorials skip it.
+**The problem.** Getting an AI model to *reply* is easy. **Running it as a real service — without it getting abused, breaking, or burning a huge bill — is the hard part, and almost no one shows you how.**
 
-This project is a **cookbook for exactly that.** Each *recipe* is a small, real AI service you can **run yourself in a few minutes**, already set up the careful way — a password to get in, limits so no one can abuse it, timeouts, and a locked-down container — with plain-language notes on *why* each piece is there.
+You could ask an AI model how. You'll get a plausible answer — but is it correct? current? actually safe? It won't tell you what it skipped, and it never *ran* anything.
 
-You don't need to be an expert, or even have an AI account. The first recipe runs with **no API key and no cost**: it replies with a fixed message so you can watch a real, safe deployment work before plugging in an actual model. If you can install Docker and copy a few commands, you're in.
+**This cookbook is the opposite.** Each *recipe* is a real AI deployment you **run yourself in minutes** — already set up the careful way (a token to get in, limits against abuse, timeouts, a locked-down container), with plain-English notes on *why* each piece is there and honest about what it does **not** cover. Every recipe is **proven to run** (verified in CI) — the way people who actually operate these systems harden them, written down so you don't learn it the painful way. No API key or cost to start.
 
 > In one line: **a vendor-neutral, runnable cookbook for deploying AI workloads** — apps, agents, and model serving — with the safeguards built in and the trade-offs made explicit.
 
