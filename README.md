@@ -86,6 +86,7 @@ The configured model endpoint belongs to the operator. Users cannot supply a URL
 
 - [Recipe 01: run, deploy, verify, and troubleshoot](recipes/01-ai-app/README.md)
 - [See the safeguards yourself: watch each control act](docs/see-the-safeguards.md)
+- [How the safeguards map to OWASP (LLM Top 10 & API Security)](docs/owasp-mapping.md)
 - [Deployment decisions and public-service requirements](docs/deployment-decisions.md)
 - [Verification record](docs/verification.md)
 - [Roadmap](ROADMAP.md)

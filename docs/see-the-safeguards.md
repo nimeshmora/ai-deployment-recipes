@@ -186,4 +186,7 @@ The counts are `0`: the words you sent and the token you used are absent from th
 A request has to survive all of these to get an answer. Reproducing them is the point
 of the recipe: the safeguards are things you can run, not claims you have to trust.
 
+For how each one maps to the OWASP LLM Top 10 and OWASP API Security Top 10 — and what
+this recipe deliberately does not cover — see [the OWASP mapping](owasp-mapping.md).
+
 When you are done: `docker compose down`.
