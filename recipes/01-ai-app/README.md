@@ -72,7 +72,7 @@ The script prompts without echoing the key. A key may be empty for a trusted key
 
 ### Exact supported API contract
 
-The adapter sends a non-streaming POST with `model`, one `user` message, `max_tokens`, and `stream: false`. It expects JSON containing `choices[0].message.content` as non-empty text and an optional string `finish_reason`. The finish reason is returned to the client; the UI flags `length` as truncation.
+The adapter sends a non-streaming POST with `model`, one `user` message, `max_tokens`, and `stream: false`. It expects JSON containing `choices[0].message.content` as non-empty text and an optional string `finish_reason`. The finish reason is returned to the client; a value of `length` indicates the output was truncated at the token limit.
 
 Not all providers or models implement this exact subset. Some require `max_completion_tokens`, special headers, a different route, a chat template, or another API. Such integrations require an explicit adapter change and tests. This recipe does not claim universal provider compatibility. Provider errors, refusals without text, and tool-only responses are not silently converted into answers.
 
@@ -128,7 +128,7 @@ The fixed window starts on the first relevant request and resets after 60 second
 
 HTTPX uses a 5-second connect timeout, 1-second pool timeout, and 20-second read/write inactivity timeouts, inside the overall model-call deadline. Provider response bodies are limited to 256 KiB; compressed provider responses are rejected. Redirects are not followed and proxy environment variables are ignored by the client.
 
-There are **no automatic retries**. A timed-out generation may still execute or be billed upstream. A browser disconnect does not guarantee immediate cancellation of the upstream call; the server-side deadline still applies. Retry only with an understood cost/side-effect policy.
+There are **no automatic retries**. A timed-out generation may still execute or be billed upstream. A client disconnect does not guarantee immediate cancellation of the upstream call; the server-side deadline still applies. Retry only with an understood cost/side-effect policy.
 
 Readiness does not prove the API key, model name, provider availability, or answer quality. A separate synthetic check or live smoke test is needed. Docker health checks only set container health status; `restart: unless-stopped` does not restart a process merely because it is unhealthy.
 

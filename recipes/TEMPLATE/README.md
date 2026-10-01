@@ -50,7 +50,7 @@ A short diagram (Mermaid) or description of the request/data path and the compon
 # exact, copy-pasteable commands to start the workload
 ```
 
-Open / verify: <URL or command and what a healthy result looks like>.
+Verify: <the command to call it, and what a healthy result looks like>.
 
 ## Health and readiness
 

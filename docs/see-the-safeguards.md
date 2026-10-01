@@ -6,7 +6,7 @@ you watch each one act, so the value is observable rather than asserted.
 
 Two ways to do it:
 
-- **Fast:** run one script that exercises checks 1–8 and prints a result for each.
+- **Fast:** run the readiness check — one command that tests the safeguards and prints a pass/fail score.
 - **By hand:** send each request yourself with `curl` and read the status code.
 
 Either way, the behaviors here are also locked in by the automated test suite (see
@@ -143,7 +143,7 @@ above do not. After 60 seconds the window resets.
 
 ### 8. Security headers + request ID
 
-Every response carries hardened browser headers and a unique request ID you can trace
+Every response carries hardened security headers and a unique request ID you can trace
 in the logs. Print the response headers:
 
 ```bash

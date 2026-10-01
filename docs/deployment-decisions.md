@@ -10,7 +10,7 @@ This release makes a few controls concrete while keeping the application small. 
 | Trusted, fixed model endpoint | Clients cannot choose destinations or arbitrarily spend on other models | Validate operator configuration, control outbound egress and provider credentials. |
 | No automatic retries | Avoid hidden repeated generation and costs | Add bounded retries with jitter only for selected errors and known semantics. |
 | Request and response bounds | Constrain application memory/work per accepted request | Not a complete network DoS defense; use ingress/header/connection limits and infrastructure controls. |
-| Plain-text answer rendering | Model output is untrusted | No Markdown/HTML rendering, tools, shell execution, or database access in this recipe. |
+| Plain-text model output | Model output is untrusted | Returned verbatim as a JSON string; no tools, shell execution, database access, or rich rendering in this recipe. |
 | Separate local health signals | Provider outages should not automatically trigger process restart loops | Monitor upstream availability separately; route-level readiness policies depend on the deployment. |
 | Read-only, non-root container | Reduce writable surface and ambient privileges | Not a sandbox for hostile code. The image itself remains readable and network egress remains available. |
 | File-mounted secrets | Keep secrets out of build layers and checked-in configuration | Local Compose files are not an encrypted vault; protect the host and use a secret manager when deployed. |

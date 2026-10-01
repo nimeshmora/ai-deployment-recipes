@@ -1,8 +1,8 @@
 # Readiness check
 
 A small, dependency-free tool that probes a running AI service and reports which
-deployment safeguards are present — the shared, portable version of recipe 01's
-"what protects this deployment" panel. Point it at **any** recipe's endpoint.
+deployment safeguards are present. Point it at **any** recipe's endpoint — it's how every
+recipe shows its safeguards, no UI required.
 
 ## Use it
 
@@ -16,6 +16,8 @@ python3 tools/readiness-check/readiness_check.py http://localhost:8000 \
 Output:
 
 ```
+  PASS  health /health/live             HTTP 200
+  PASS  health /health/ready            HTTP 200
   PASS  auth required          [API2]   no token -> HTTP 401 (want 401)
   PASS  hardened headers       [API8]   all present
   PASS  content-type enforced  [API8]   text/plain -> 415

@@ -12,9 +12,9 @@ actually runs and is verified.
   templates, code of conduct. *(In place.)*
 - **Readiness check — available.** A small, dependency-free
   [tool](tools/readiness-check/README.md) that probes any recipe's endpoint and reports
-  which safeguards are present, and works as a CI gate. It's the portable version of
-  recipe 01's "what protects this deployment" panel — the runnable hook that makes the
-  cookbook more than documentation. Next: per-recipe profiles for non-chat shapes.
+  which safeguards are present, and works as a CI gate — the runnable hook that makes the
+  cookbook more than documentation, and how every recipe shows its safeguards without a
+  UI. Next: per-recipe profiles for non-chat shapes.
 
 ## Next — recipes by workload
 

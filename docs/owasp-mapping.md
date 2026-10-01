@@ -21,7 +21,7 @@ walkthrough, or check automatically with the [readiness tool](../tools/readiness
 | Body-size limit `413`, message-length limit `422`, per-minute rate limit `429`, bounded concurrency, output-token cap, bounded provider response | **LLM10 Unbounded Consumption** | API4 Unrestricted Resource Consumption | The core cost/DoS controls. Process-local, single instance. |
 | Overall model-call deadline + **no hidden retries** | LLM10 Unbounded Consumption | API4 | Avoids silent repeated generation and runaway cost. |
 | Strict request schema, extra fields rejected (`422`) | — | API3 Broken Object Property Level Auth / input validation | `extra="forbid"` — smuggled fields are refused, not trusted. |
-| Plain-text rendering of model output (never HTML) | **LLM05 Improper Output Handling** | — | Treats model output as untrusted; no XSS/markup execution. |
+| Model output returned as plain text | **LLM05 Improper Output Handling** | — | Returned verbatim as a JSON string; the app never renders or executes it. |
 | Logs omit prompts, answers, tokens, URLs | **LLM02 Sensitive Information Disclosure** | API8 Security Misconfiguration (logging) | Only request ID, status, duration are logged. |
 | Operator-fixed model endpoint; client cannot choose URL or model | LLM03 Supply Chain (trusted upstream) | API7 Server-Side Request Forgery | Prevents redirecting prompts/keys to an attacker endpoint. |
 | Hardened response headers (CSP, nosniff, no-referrer, no-store) + request IDs | — | API8 Security Misconfiguration | Browser hardening and traceability. |
