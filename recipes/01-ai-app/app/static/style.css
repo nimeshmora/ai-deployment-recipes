@@ -65,11 +65,45 @@ h2{font-family:var(--hand);font-size:24px;margin:30px 0 12px}
 .test:disabled{opacity:.6;cursor:wait}
 .g-why{font-size:13.5px;color:var(--ink-soft);margin:9px 0 0}
 .warnx{color:#a87400}
-.g-result{font-family:var(--hand);font-size:15px;margin:8px 0 0;display:none}
+.g-result{font-family:var(--hand);font-size:15px;margin:9px 0 0;display:none}
 .g-result.show{display:block}
-.g-result.pass{color:var(--ok)}
-.g-result.fail{color:var(--coral)}
 .g-result.warn{color:#a87400}
+
+/* animated "request races at the service and the safeguard reacts" */
+.lane{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.who{font-size:12px;color:var(--ink-soft)}
+.track{position:relative;flex:0 0 150px;height:14px;border-bottom:2px dotted var(--line)}
+.packet{position:absolute;top:50%;left:0;width:12px;height:12px;margin-top:-6px;border-radius:50%;
+  background:var(--sky);box-shadow:0 0 0 2px var(--paper2)}
+.gate{font-size:19px;line-height:1;filter:grayscale(.2);display:inline-block}
+.stamp{font-family:var(--hand);font-size:15px;opacity:0}
+.stamp.pass{color:var(--ok)} .stamp.fail{color:var(--coral)} .stamp.warn{color:#a87400}
+
+.lane.sending .packet{animation:travel .8s ease-in forwards}
+@keyframes travel{from{left:0}to{left:calc(100% - 12px)}}
+
+/* blocked: the bad request bounces back off the gate (good — the safeguard worked) */
+.lane.blocked .packet{animation:recoil .5s ease-out forwards;background:var(--coral)}
+@keyframes recoil{0%{left:calc(100% - 12px)}30%{left:100%}100%{left:2px;opacity:.25}}
+.lane.blocked .gate{animation:shake .45s ease-in-out, flash-ok .7s ease-out}
+
+/* allowed: a good request passes the gate */
+.lane.allowed .packet{animation:through .5s ease-out forwards;background:var(--ok)}
+@keyframes through{0%{left:calc(100% - 12px)}60%{left:100%;opacity:1}100%{left:108%;opacity:0}}
+.lane.allowed .gate{animation:flash-ok .7s ease-out}
+
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}60%{transform:translateX(3px)}}
+@keyframes flash-ok{0%{color:inherit;transform:scale(1)}45%{color:var(--ok);transform:scale(1.35)}100%{color:inherit;transform:scale(1)}}
+
+.stamp.pop{animation:pop .3s .25s ease-out forwards}
+@keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+
+@media(prefers-reduced-motion:reduce){
+  .packet,.gate,.stamp{animation:none!important}
+  .packet{left:calc(100% - 12px)}
+  .lane.blocked .packet{background:var(--coral)} .lane.allowed .packet{background:var(--ok)}
+  .stamp{opacity:1}
+}
 .g-result.run{color:var(--ink-soft)}
 .how{margin:9px 0 0}
 .how summary{font-family:var(--hand);font-size:14px;color:#b6513a;cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:5px}
