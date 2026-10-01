@@ -51,40 +51,70 @@ def check(number, name, why, expected, got, ok):
 
 # 1. Anonymous request is rejected.
 status, _ = call("/api/chat", {"message": "hi"}, token=None)
-check(1, "Authentication (no token)",
-      "Blocks anonymous traffic from spending your model budget.",
-      "401", status, status == 401)
+check(
+    1,
+    "Authentication (no token)",
+    "Blocks anonymous traffic from spending your model budget.",
+    "401",
+    status,
+    status == 401,
+)
 
 # 2. Wrong token is rejected (constant-time comparison in the app).
 status, _ = call("/api/chat", {"message": "hi"}, token="wrong-token-value-1234567890")
-check(2, "Authentication (wrong token)",
-      "A guessed or stale token still cannot call the model.",
-      "401", status, status == 401)
+check(
+    2,
+    "Authentication (wrong token)",
+    "A guessed or stale token still cannot call the model.",
+    "401",
+    status,
+    status == 401,
+)
 
 # 3. Non-JSON content type is rejected even with a valid token.
 status, _ = call("/api/chat", {"message": "hi"}, token=TOKEN, content_type="text/plain")
-check(3, "Content-type enforcement",
-      "Only declared application/json is processed.",
-      "415", status, status == 415)
+check(
+    3,
+    "Content-type enforcement",
+    "Only declared application/json is processed.",
+    "415",
+    status,
+    status == 415,
+)
 
 # 4. Message longer than 4000 characters is rejected by the schema.
 status, _ = call("/api/chat", {"message": "a" * 5000}, token=TOKEN)
-check(4, "Input length limit",
-      "An over-long prompt is refused before it reaches the model.",
-      "422", status, status == 422)
+check(
+    4,
+    "Input length limit",
+    "An over-long prompt is refused before it reaches the model.",
+    "422",
+    status,
+    status == 422,
+)
 
 # 5. Body larger than 16 KiB is rejected before JSON parsing.
 oversized = b'{"message":"' + b"a" * 20000 + b'"}'
 status, _ = call("/api/chat", oversized, token=TOKEN)
-check(5, "Raw body size limit",
-      "A huge payload is dropped before parsing, protecting memory.",
-      "413", status, status == 413)
+check(
+    5,
+    "Raw body size limit",
+    "A huge payload is dropped before parsing, protecting memory.",
+    "413",
+    status,
+    status == 413,
+)
 
 # 6. Unknown fields are rejected (strict schema).
 status, _ = call("/api/chat", {"message": "hi", "admin": True}, token=TOKEN)
-check(6, "Strict request schema",
-      "Smuggled extra fields (e.g. admin flags) are refused.",
-      "422", status, status == 422)
+check(
+    6,
+    "Strict request schema",
+    "Smuggled extra fields (e.g. admin flags) are refused.",
+    "422",
+    status,
+    status == 422,
+)
 
 # 7. Rate limit: burst past REQUESTS_PER_MINUTE and watch throttling begin.
 accepted = throttled = other = 0
@@ -96,23 +126,34 @@ for _ in range(40):
         throttled += 1
     else:
         other += 1
-check(7, "Rate limiting",
-      "One caller cannot flood the service; excess is throttled with 429.",
-      "some 200 then 429 (default budget is 30/min)",
-      f"accepted(200)={accepted}, throttled(429)={throttled}, other={other}",
-      throttled >= 1)
+check(
+    7,
+    "Rate limiting",
+    "One caller cannot flood the service; excess is throttled with 429.",
+    "some 200 then 429 (default budget is 30/min)",
+    f"accepted(200)={accepted}, throttled(429)={throttled}, other={other}",
+    throttled >= 1,
+)
 
 # 8. Security headers and a correlation request ID are present.
 status, resp_headers = call("/api/chat", {"message": "hi"}, token=TOKEN)
 lower = {k.lower(): v for k, v in resp_headers.items()}
-required = ["x-request-id", "content-security-policy", "x-content-type-options",
-            "referrer-policy", "cache-control"]
+required = [
+    "x-request-id",
+    "content-security-policy",
+    "x-content-type-options",
+    "referrer-policy",
+    "cache-control",
+]
 present = [h for h in required if h in lower]
-check(8, "Security headers + request ID",
-      "Hardened browser headers; request ID lets you trace one call in logs.",
-      f"all present: {required}",
-      f"present: {present}",
-      len(present) == len(required))
+check(
+    8,
+    "Security headers + request ID",
+    "Hardened browser headers; request ID lets you trace one call in logs.",
+    f"all present: {required}",
+    f"present: {present}",
+    len(present) == len(required),
+)
 request_id = lower.get("x-request-id", "<none>")
 
 # 9. Redacted logs: verified against docker logs, not over HTTP.
@@ -127,6 +168,8 @@ print("   docker compose logs --no-log-prefix app | grep -c Bearer    # expect 0
 
 passed = sum(results)
 total = len(results)
-print(f"Summary: {passed}/{total} HTTP-observable safeguards behaved as expected "
-      "(check 9 is verified with the log commands above).")
+print(
+    f"Summary: {passed}/{total} HTTP-observable safeguards behaved as expected "
+    "(check 9 is verified with the log commands above)."
+)
 raise SystemExit(0 if passed == total else 1)
